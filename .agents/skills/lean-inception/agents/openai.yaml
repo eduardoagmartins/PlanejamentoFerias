@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean Inception"
+  short_description: "Discovery Lean Inception para Spec Kit"
+  default_prompt: "Use $lean-inception para conduzir discovery e gerar insumos para Spec Kit."
