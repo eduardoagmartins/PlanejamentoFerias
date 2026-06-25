@@ -2,6 +2,7 @@ import { AlertTriangle, CalendarDays, LogOut, UserRound, Users } from "lucide-re
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../features/auth/AuthProvider";
 import type { ReactNode } from "react";
+import brandLogo from "../../assets/sys-manager-logo.png";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { manager, signOut } = useAuth();
@@ -17,7 +18,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="app-layout">
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <span className="brand-mark">FT</span>
+          <span className="brand-mark">
+            <img src={brandLogo} alt="" />
+          </span>
           <div>
             <strong>Ferias do Time</strong>
             <span>Planejamento interno</span>

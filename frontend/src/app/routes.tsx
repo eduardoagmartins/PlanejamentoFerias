@@ -25,7 +25,7 @@ export const appRoutes: RouteObject[] = [
     path: "/app",
     element: <ProtectedShell />,
     children: [
-      { index: true, element: <TeamsPage /> },
+      { index: true, element: <Navigate to="teams" replace /> },
       { path: "teams", element: <TeamsPage /> },
       { path: "teams/:teamId/employees", element: <EmployeesPage /> },
       { path: "teams/:teamId/absences", element: <AbsencesPage /> },

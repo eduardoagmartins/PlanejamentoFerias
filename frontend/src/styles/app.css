@@ -1,31 +1,33 @@
 :root {
-  color: #111827;
-  background: #dfe4ec;
+  color: #0d0d0d;
+  background: #e6edf3;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: geometricPrecision;
-  --bg: #dfe4ec;
+  --bg: #e6edf3;
   --panel: #ffffff;
   --panel-soft: #f7f8fb;
   --line: #e2e7ef;
   --line-strong: #cfd7e4;
-  --text: #111827;
+  --text: #0d0d0d;
   --muted: #5d6b7e;
   --quiet: #8b98aa;
-  --primary: #111827;
-  --primary-soft: #eef2f7;
-  --blue: #2563eb;
-  --blue-soft: #eaf2ff;
-  --green: #087f5b;
-  --green-soft: #e9f7f0;
-  --amber: #b7791f;
-  --amber-soft: #fff7df;
-  --red: #d92d20;
-  --red-soft: #fff1f0;
-  --purple: #7c3aed;
-  --purple-soft: #f2eaff;
-  --shadow: 0 18px 50px rgb(17 24 39 / 10%);
-  --shadow-sm: 0 8px 22px rgb(17 24 39 / 7%);
+  --primary: #0d0d0d;
+  --primary-soft: #eef1f4;
+  --blue: #0367a6;
+  --blue-soft: #e6f3fb;
+  --pink: #f2389e;
+  --pink-soft: #fff0f8;
+  --green: #0367a6;
+  --green-soft: #e6f3fb;
+  --amber: #f2389e;
+  --amber-soft: #fff0f8;
+  --red: #f2389e;
+  --red-soft: #fff0f8;
+  --purple: #f2389e;
+  --purple-soft: #fff0f8;
+  --shadow: 0 18px 50px rgb(13 13 13 / 10%);
+  --shadow-sm: 0 8px 22px rgb(13 13 13 / 7%);
 }
 
 * {
@@ -89,8 +91,8 @@ button {
 }
 
 button:hover {
-  background: #1f2937;
-  border-color: #1f2937;
+  background: #0367a6;
+  border-color: #0367a6;
 }
 
 button:active {
@@ -121,7 +123,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 a:focus-visible {
-  outline: 3px solid rgb(37 99 235 / 22%);
+  outline: 3px solid rgb(242 56 158 / 24%);
   outline-offset: 2px;
 }
 
@@ -135,8 +137,9 @@ a:focus-visible {
 
 .login-screen {
   background:
-    radial-gradient(circle at 18% 20%, rgb(255 255 255 / 56%), transparent 30%),
-    linear-gradient(135deg, #d7dde7 0%, #eef1f6 48%, #d9e4ee 100%);
+    radial-gradient(circle at 18% 20%, rgb(242 56 158 / 16%), transparent 30%),
+    radial-gradient(circle at 82% 78%, rgb(3 103 166 / 15%), transparent 28%),
+    linear-gradient(135deg, #e6edf3 0%, #f8fbfd 48%, #eaf2f7 100%);
   padding: 24px;
 }
 
@@ -240,18 +243,24 @@ a:focus-visible {
 
 .brand-mark {
   align-items: center;
-  background: linear-gradient(145deg, #111827, #273244);
-  border: 1px solid #394253;
+  background: #ffffff;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  box-shadow: 0 10px 24px rgb(17 24 39 / 22%);
-  color: #ffffff;
+  box-shadow: 0 10px 24px rgb(13 13 13 / 13%);
   display: inline-flex;
   flex: 0 0 auto;
-  font-size: 12px;
-  font-weight: 900;
   height: 36px;
   justify-content: center;
+  overflow: hidden;
+  padding: 4px;
   width: 36px;
+}
+
+.brand-mark img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .sidebar-nav {

@@ -17,7 +17,7 @@ A aplicacao passou a seguir uma linguagem de produto interno operacional, inspir
 - botoes secundarios brancos com borda;
 - raio de borda preferencial de `8px`;
 - sombras leves, usadas apenas para hierarquia visual;
-- paleta neutra com cores semanticas para estados de sucesso, alerta, erro e informacao.
+- paleta principal baseada em `#F2389E`, `#0367A6` e `#0D0D0D`, com variacoes suaves para superficies e estados.
 
 ## Tokens Visuais Implementados
 
@@ -28,11 +28,32 @@ Os tokens principais ficam em `frontend/src/styles/app.css`:
 - `--panel-soft`: superficies secundarias claras.
 - `--line`: bordas discretas.
 - `--line-strong`: bordas de controles.
-- `--text`: texto principal.
+- `--text`: texto principal, baseado em `#0D0D0D`.
 - `--muted`: texto secundario.
-- `--primary`: botoes primarios e marca.
-- `--blue`, `--green`, `--amber`, `--red`, `--purple`: cores semanticas.
+- `--primary`: botoes primarios e texto forte, baseado em `#0D0D0D`.
+- `--blue`: cor institucional azul, baseada em `#0367A6`.
+- `--pink`: cor institucional rosa, baseada em `#F2389E`.
+- `--green`, `--amber`, `--red`, `--purple`: aliases semanticos ajustados para permanecer dentro da paleta institucional.
 - `--shadow` e `--shadow-sm`: elevacao de shell, cards e botoes.
+
+## Marca
+
+Asset utilizado: `frontend/src/assets/sys-manager-logo.png`.
+
+Implementacoes:
+
+- substituicao do monograma textual `FT` pela imagem `SYS-Manager-icone-JAN25.png`;
+- a imagem foi copiada para o projeto como `sys-manager-logo.png`;
+- o componente visual continua usando a classe `.brand-mark`, agora como container da imagem;
+- a marca aparece na sidebar e na tela de login;
+- o arquivo `frontend/src/vite-env.d.ts` foi criado para habilitar imports de assets pelo Vite/TypeScript.
+
+Padrao futuro:
+
+- usar sempre o asset versionado em `frontend/src/assets/sys-manager-logo.png`;
+- nao usar caminhos absolutos da maquina local para imagens na aplicacao;
+- preservar proporcao do logo com `object-fit: contain`;
+- manter fundo branco no container da marca para garantir contraste.
 
 ## Shell E Navegacao
 
@@ -41,7 +62,7 @@ Arquivo alterado: `frontend/src/components/layout/AppShell.tsx`.
 Implementacoes:
 
 - substituicao de links simples por `NavLink` para estado ativo;
-- marca visual `FT` no topo da sidebar;
+- imagem de marca no topo da sidebar;
 - sidebar com navegacao principal para Times, Colaboradores, Ausencias, Linha do tempo e Conflitos;
 - cartao do gestor no rodape da sidebar;
 - botao de sair integrado ao mesmo sistema visual;
@@ -62,7 +83,7 @@ Arquivo alterado: `frontend/src/features/auth/LoginPage.tsx`.
 Implementacoes:
 
 - painel centralizado com sombra e borda sutil;
-- marca `FT` aplicada no topo;
+- imagem de marca aplicada no topo;
 - texto de apoio curto explicando o uso da aplicacao;
 - inputs e botao primario alinhados ao novo sistema visual.
 
@@ -173,7 +194,7 @@ Classes criadas ou consolidadas:
 - `.app-layout`: estrutura geral da aplicacao.
 - `.sidebar`: navegacao lateral.
 - `.sidebar-brand`: marca e nome do produto.
-- `.brand-mark`: marca compacta `FT`.
+- `.brand-mark`: container compacto para o logo da marca.
 - `.sidebar-nav`: lista de navegacao.
 - `.sidebar-footer`: rodape da sidebar.
 - `.manager-card`: informacoes do gestor.

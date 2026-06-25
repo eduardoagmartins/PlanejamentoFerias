@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogIn } from "lucide-react";
 import { useAuth } from "./AuthProvider";
+import brandLogo from "../../assets/sys-manager-logo.png";
 
 export function LoginPage() {
   const { signIn } = useAuth();
@@ -28,7 +29,9 @@ export function LoginPage() {
   return (
     <main className="login-screen">
       <section className="login-panel" aria-labelledby="login-title">
-        <span className="brand-mark login-mark">FT</span>
+        <span className="brand-mark login-mark">
+          <img src={brandLogo} alt="SYS Manager" />
+        </span>
         <h1 id="login-title">Planejamento de Ferias</h1>
         <p>Entre para organizar times, ausencias e conflitos em uma linha do tempo unica.</p>
         <form onSubmit={onSubmit} className="stack">
