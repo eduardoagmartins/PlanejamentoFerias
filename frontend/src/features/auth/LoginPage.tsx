@@ -28,7 +28,9 @@ export function LoginPage() {
   return (
     <main className="login-screen">
       <section className="login-panel" aria-labelledby="login-title">
+        <span className="brand-mark login-mark">FT</span>
         <h1 id="login-title">Planejamento de Ferias</h1>
+        <p>Entre para organizar times, ausencias e conflitos em uma linha do tempo unica.</p>
         <form onSubmit={onSubmit} className="stack">
           <label>
             Email

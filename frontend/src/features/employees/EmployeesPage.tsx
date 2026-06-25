@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Plus, Trash2 } from "lucide-react";
+import { BriefcaseBusiness, Plus, Trash2, UserCheck } from "lucide-react";
 import type { Employee } from "../../lib/api-client/client";
 import * as employeesApi from "./employees.api";
 
@@ -35,6 +35,9 @@ export function EmployeesPage() {
     await load();
   }
 
+  const activeEmployees = employees.filter((employee) => employee.active).length;
+  const roles = new Set(employees.map((employee) => employee.role).filter(Boolean)).size;
+
   return (
     <section className="page">
       <header className="page-header">
@@ -42,9 +45,27 @@ export function EmployeesPage() {
           <h1>Colaboradores</h1>
           <p>Cadastro do time selecionado para planejamento.</p>
         </div>
-        <Link to={`/app/teams/${teamId}/absences`}>Registrar ausencias</Link>
+        <Link className="header-action" to={`/app/teams/${teamId}/absences`}>Registrar ausencias</Link>
       </header>
-      <form className="grid-form" onSubmit={create}>
+
+      <div className="metric-grid">
+        <article className="metric-card">
+          <span className="metric-icon">
+            <UserCheck size={18} />
+          </span>
+          <strong>{activeEmployees}</strong>
+          <span>colaboradores ativos</span>
+        </article>
+        <article className="metric-card">
+          <span className="metric-icon">
+            <BriefcaseBusiness size={18} />
+          </span>
+          <strong>{roles}</strong>
+          <span>cargos informados</span>
+        </article>
+      </div>
+
+      <form className="grid-form surface-form" onSubmit={create}>
         <input placeholder="Nome" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} required />
         <input placeholder="Email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
         <input placeholder="Cargo" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })} />

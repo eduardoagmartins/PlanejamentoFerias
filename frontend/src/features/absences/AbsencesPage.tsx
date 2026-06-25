@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Pencil } from "lucide-react";
+import { CalendarCheck, CalendarOff, Pencil } from "lucide-react";
 import { Select } from "../../components/ui/Select";
 import type { Absence, Employee, VacationStatus } from "../../lib/api-client/client";
 import { addDaysIso, todayIso } from "../../lib/dates/date-range";
@@ -64,14 +64,36 @@ export function AbsencesPage() {
           <h1>Ausencias</h1>
           <p>Ferias e day-offs individuais.</p>
         </div>
-        <Link to={`/app/teams/${teamId}/timeline`}>Ver timeline</Link>
+        <Link className="header-action" to={`/app/teams/${teamId}/timeline`}>Ver timeline</Link>
       </header>
       {message && <p className="success">{message}</p>}
       {error && <p className="error">{error}</p>}
-      <h2>Ferias</h2>
-      <VacationForm employees={employees} onSaved={saved} />
-      <h2>Day-off</h2>
-      <DayOffForm employees={employees} onSaved={saved} />
+      <div className="form-panel-grid">
+        <section className="form-panel">
+          <header className="subheader">
+            <span className="metric-icon">
+              <CalendarCheck size={18} />
+            </span>
+            <div>
+              <h2>Ferias</h2>
+              <p>Registre um periodo planejado.</p>
+            </div>
+          </header>
+          <VacationForm employees={employees} onSaved={saved} />
+        </section>
+        <section className="form-panel">
+          <header className="subheader">
+            <span className="metric-icon">
+              <CalendarOff size={18} />
+            </span>
+            <div>
+              <h2>Day-off</h2>
+              <p>Adicione folgas ou ausencias pontuais.</p>
+            </div>
+          </header>
+          <DayOffForm employees={employees} onSaved={saved} />
+        </section>
+      </div>
       <section className="section-block">
         <header className="subheader">
           <div>
@@ -79,7 +101,7 @@ export function AbsencesPage() {
             <p>Filtre o periodo e edite um registro existente.</p>
           </div>
         </header>
-        <form className="inline-form" onSubmit={loadAbsences}>
+        <form className="inline-form surface-form" onSubmit={loadAbsences}>
           <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} required />
           <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} required />
           <button type="submit">Buscar</button>

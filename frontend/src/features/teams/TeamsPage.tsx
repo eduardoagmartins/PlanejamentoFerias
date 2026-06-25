@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Trash2 } from "lucide-react";
+import { CalendarDays, Plus, Trash2, Users } from "lucide-react";
 import type { Team } from "../../lib/api-client/client";
 import { EmptyState } from "../../components/feedback/EmptyState";
 import * as teamsApi from "./teams.api";
@@ -49,7 +49,24 @@ export function TeamsPage() {
         </div>
       </header>
 
-      <form className="inline-form" onSubmit={create}>
+      <div className="metric-grid">
+        <article className="metric-card">
+          <span className="metric-icon">
+            <Users size={18} />
+          </span>
+          <strong>{teams.length}</strong>
+          <span>times cadastrados</span>
+        </article>
+        <article className="metric-card">
+          <span className="metric-icon">
+            <CalendarDays size={18} />
+          </span>
+          <strong>MVP</strong>
+          <span>piloto interno</span>
+        </article>
+      </div>
+
+      <form className="inline-form surface-form" onSubmit={create}>
         <input placeholder="Nome do time" value={name} onChange={(event) => setName(event.target.value)} required />
         <button type="submit">
           <Plus size={18} />
@@ -63,7 +80,10 @@ export function TeamsPage() {
       <div className="list">
         {teams.map((team) => (
           <article className="list-row" key={team.id}>
-            <strong>{team.name}</strong>
+            <span>
+              <strong>{team.name}</strong>
+              <small>Unidade de planejamento</small>
+            </span>
             <div className="row-actions">
               <Link to={`/app/teams/${team.id}/employees`}>Colaboradores</Link>
               <Link to={`/app/teams/${team.id}/timeline`}>Timeline</Link>
