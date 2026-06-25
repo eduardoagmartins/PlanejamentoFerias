@@ -1,0 +1,656 @@
+openapi: 3.1.0
+info:
+  title: Planejamento de Ferias do Time API
+  version: 0.1.0
+  description: Contract for the MVP1 React frontend and Node.js backend.
+servers:
+  - url: http://localhost:3000
+security:
+  - cookieAuth: []
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate manager with email and password
+      operationId: login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated manager session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSession'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /auth/logout:
+    post:
+      summary: End current manager session
+      operationId: logout
+      responses:
+        '204':
+          description: Session ended
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /me:
+    get:
+      summary: Get current manager
+      operationId: getCurrentManager
+      responses:
+        '200':
+          description: Current manager
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /teams:
+    get:
+      summary: List teams visible to the manager
+      operationId: listTeams
+      responses:
+        '200':
+          description: Teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+    post:
+      summary: Create team
+      operationId: createTeam
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreate'
+      responses:
+        '201':
+          description: Created team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  /teams/{teamId}:
+    patch:
+      summary: Update team
+      operationId: updateTeam
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamUpdate'
+      responses:
+        '200':
+          description: Updated team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Remove or archive team
+      operationId: deleteTeam
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+      responses:
+        '204':
+          description: Team removed
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /teams/{teamId}/employees:
+    get:
+      summary: List employees for a team
+      operationId: listEmployees
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+      responses:
+        '200':
+          description: Employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    post:
+      summary: Create employee
+      operationId: createEmployee
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeCreate'
+      responses:
+        '201':
+          description: Created employee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  /employees/{employeeId}:
+    patch:
+      summary: Update employee
+      operationId: updateEmployee
+      parameters:
+        - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+      responses:
+        '200':
+          description: Updated employee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Remove or deactivate employee
+      operationId: deleteEmployee
+      parameters:
+        - $ref: '#/components/parameters/EmployeeId'
+      responses:
+        '204':
+          description: Employee removed or deactivated
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vacations:
+    post:
+      summary: Create vacation
+      operationId: createVacation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacationCreate'
+      responses:
+        '201':
+          description: Created vacation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vacation'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  /vacations/{vacationId}:
+    patch:
+      summary: Update vacation
+      operationId: updateVacation
+      parameters:
+        - $ref: '#/components/parameters/VacationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacationUpdate'
+      responses:
+        '200':
+          description: Updated vacation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vacation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete vacation
+      operationId: deleteVacation
+      parameters:
+        - $ref: '#/components/parameters/VacationId'
+      responses:
+        '204':
+          description: Vacation deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /day-offs:
+    post:
+      summary: Create individual day-off
+      operationId: createDayOff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DayOffCreate'
+      responses:
+        '201':
+          description: Created day-off
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DayOff'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  /day-offs/{dayOffId}:
+    patch:
+      summary: Update individual day-off
+      operationId: updateDayOff
+      parameters:
+        - $ref: '#/components/parameters/DayOffId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DayOffUpdate'
+      responses:
+        '200':
+          description: Updated day-off
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DayOff'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete individual day-off
+      operationId: deleteDayOff
+      parameters:
+        - $ref: '#/components/parameters/DayOffId'
+      responses:
+        '204':
+          description: Day-off deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /teams/{teamId}/timeline:
+    get:
+      summary: Get team timeline
+      operationId: getTeamTimeline
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Timeline with absences and overlaps
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeline'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  /teams/{teamId}/conflicts:
+    get:
+      summary: Get overlap conflict summary
+      operationId: getTeamConflicts
+      parameters:
+        - $ref: '#/components/parameters/TeamId'
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Conflict summary
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Overlap'
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: session
+  parameters:
+    TeamId:
+      name: teamId
+      in: path
+      required: true
+      schema:
+        type: string
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+    VacationId:
+      name: vacationId
+      in: path
+      required: true
+      schema:
+        type: string
+    DayOffId:
+      name: dayOffId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+    AuthSession:
+      type: object
+      required: [manager]
+      properties:
+        manager:
+          $ref: '#/components/schemas/Manager'
+    Manager:
+      type: object
+      required: [id, name, email]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+    Team:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    TeamCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+    TeamUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+    Employee:
+      type: object
+      required: [id, teamId, name, active]
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        corporateIdentifier:
+          type: string
+        role:
+          type: string
+        active:
+          type: boolean
+    EmployeeCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        corporateIdentifier:
+          type: string
+        role:
+          type: string
+    EmployeeUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        corporateIdentifier:
+          type: string
+        role:
+          type: string
+        active:
+          type: boolean
+    VacationStatus:
+      type: string
+      enum: [Agendado, Em andamento, Encerradas]
+    Vacation:
+      type: object
+      required: [id, employeeId, startDate, endDate, status]
+      properties:
+        id:
+          type: string
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/VacationStatus'
+        notes:
+          type: string
+    VacationCreate:
+      type: object
+      required: [employeeId, startDate, endDate, status]
+      properties:
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/VacationStatus'
+        notes:
+          type: string
+    VacationUpdate:
+      type: object
+      properties:
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/VacationStatus'
+        notes:
+          type: string
+    DayOff:
+      type: object
+      required: [id, employeeId, startDate, endDate, reason]
+      properties:
+        id:
+          type: string
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        reason:
+          type: string
+    DayOffCreate:
+      type: object
+      required: [employeeId, startDate, endDate, reason]
+      properties:
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        reason:
+          type: string
+          minLength: 1
+    DayOffUpdate:
+      type: object
+      properties:
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        reason:
+          type: string
+          minLength: 1
+    Timeline:
+      type: object
+      required: [teamId, startDate, endDate, rows, overlaps]
+      properties:
+        teamId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimelineRow'
+        overlaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/Overlap'
+    TimelineRow:
+      type: object
+      required: [employee, absences]
+      properties:
+        employee:
+          $ref: '#/components/schemas/Employee'
+        absences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Absence'
+    Absence:
+      type: object
+      required: [type, id, employeeId, startDate, endDate, label]
+      properties:
+        type:
+          type: string
+          enum: [vacation, day_off]
+        id:
+          type: string
+        employeeId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        label:
+          type: string
+    Overlap:
+      type: object
+      required: [teamId, startDate, endDate, employeeIds, absenceIds]
+      properties:
+        teamId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        employeeIds:
+          type: array
+          items:
+            type: string
+        absenceIds:
+          type: array
+          items:
+            type: string
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
