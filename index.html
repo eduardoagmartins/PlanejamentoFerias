@@ -83,6 +83,13 @@
       font-size: 14px;
     }
     .nav-links a:hover { color: var(--fg); }
+    .nav-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
     .button {
       display: inline-flex;
       align-items: center;
@@ -106,6 +113,16 @@
       background: rgba(255,255,255,0.9);
       border-color: var(--line);
       color: var(--fg);
+    }
+    .icon-button {
+      width: 44px;
+      padding: 0;
+    }
+    .icon-github {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      display: inline-block;
     }
     .hero {
       display: grid;
@@ -491,7 +508,14 @@
         <a href="#escopo" data-od-id="nav-escopo">Escopo</a>
         <a href="#contato" data-od-id="nav-contato">Contato</a>
       </nav>
-      <a class="button button-secondary" href="https://wa.me/5521995199760?text=Ol%C3%A1!%20Tenho%20interesse%20em%20agendar%20uma%20demo." data-od-id="nav-cta">Ver demonstração</a>
+      <div class="nav-actions">
+        <a class="button button-secondary" href="https://wa.me/5521995199760?text=Ol%C3%A1!%20Tenho%20interesse%20em%20agendar%20uma%20demo." target="_blank" data-od-id="nav-cta">Ver demonstração</a>
+        <a class="button button-secondary icon-button" href="https://github.com/eduardoagmartins/PlanejamentoFerias" target="_blank" rel="noopener noreferrer" data-od-id="nav-github" aria-label="Abrir repositório no GitHub">
+          <svg class="icon-github" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M8 .2a8 8 0 0 0-2.53 15.58c.4.07.55-.17.55-.38v-1.32c-2.24.49-2.71-1.09-2.71-1.09-.36-.9-.88-1.13-.88-1.13-.72-.5.05-.49.05-.49.8.06 1.22.83 1.22.83.71 1.21 1.85.86 2.3.66.07-.52.28-.86.5-1.06-1.79-.2-3.68-.9-3.68-4a3.12 3.12 0 0 1 .83-2.16 2.9 2.9 0 0 1 .08-2.13s.67-.22 2.2.82a7.56 7.56 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82a2.9 2.9 0 0 1 .08 2.13 3.12 3.12 0 0 1 .83 2.16c0 3.11-1.9 3.8-3.7 4 .29.25.55.73.55 1.48v2.2c0 .21.14.46.55.38A8 8 0 0 0 8 .2z"/>
+          </svg>
+        </a>
+      </div>
     </header>
 
     <main>
